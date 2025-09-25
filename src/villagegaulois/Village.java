@@ -9,11 +9,13 @@ public class Village {
 	private String nom;
 	private Chef chef;
 	private Gaulois[] villageois;
+	private Marche marche;
 	private int nbVillageois = 0;
 
-	public Village(String nom, int nbVillageoisMaximum) {
+	public Village(String nom, int nbVillageoisMaximum, int nombreEtal) {
 		this.nom = nom;
 		villageois = new Gaulois[nbVillageoisMaximum];
+		marche = new Marche(nombreEtal);
 	}
 
 	public String getNom() {
@@ -59,6 +61,19 @@ public class Village {
 		return chaine.toString();
 	}
 	
+	public String installerVendeur(Gaulois vendeur, String produit,int nbProduit) {
+		int indiceEtal = marche.trouverEtalLibre();
+		StringBuilder text = new StringBuilder();
+		text.append(vendeur.getNom() + "cherche un endroit pour vendre " + nbProduit + " " + produit + ".\n");
+		if (indiceEtal == -1) {
+			text.append("Il n'y a plus de place au marché\n");
+		} else {
+			marche.utiliserEtal(indiceEtal, vendeur, produit, nbProduit);
+			text.append("Le vendeur " + vendeur.getNom() + " vend des " + produit + " à l'étal n°" + indiceEtal + ".");
+		}
+		return text.toString();
+	}
+	
 	
 	private class Marche {
 		private Etal[] etals;
@@ -70,7 +85,7 @@ public class Village {
 			}
 		}
 		
-		private void utiliserEtal(int indiceEtal, Gaulois vendeur, String produit, int nbProduit) {
+		public void utiliserEtal(int indiceEtal, Gaulois vendeur, String produit, int nbProduit) {
 			if (etals[indiceEtal].isEtalOccupe()) {
 				etals[indiceEtal].occuperEtal(vendeur, produit, nbProduit);
 				System.out.println("L'espace " + indiceEtal + " est désormais occupé par "
@@ -81,16 +96,16 @@ public class Village {
 			return;
 		}
 		
-		private int trouverEtalLibre() {
+		public int trouverEtalLibre() {
 			for (int i = 0; i < etals.length; i++) {
 				if (!etals[i].isEtalOccupe()) {
 					return i;
 				}
-			} // ELLE VEUT QU4ON METTE ISETAL DANS FOR MAIS JSP COMENT FAIT
+			} // Mettre isEtal dans for mais jsp comment ont fait pcq le i++ disparait :(
 			return -1;
 		}
 		
-		private Etal[] trouverEtals(String produit) {
+		public Etal[] trouverEtals(String produit) {
 			Etal[] etalsProduit;
 			int nombreEtal = 0;
 			for (int i = 0; i < etals.length; i++) {
@@ -124,13 +139,13 @@ public class Village {
 			for (int i = 0; i<etals.length ; i++) {
 				if (etals[i].isEtalOccupe()) {
 					text.append(etals[i].afficherEtal());
-					text.append("\\n");
+					text.append("\n");
 				} else {
 					nbEtalVide++;
 				}
 			}
 			
-			return text + "\\nIl reste" + nbEtalVide + "étals non utilisés dans le marché.";
+			return text + "\nIl reste" + nbEtalVide + "étals non utilisés dans le marché.\n";
 		}
 	}
 	
