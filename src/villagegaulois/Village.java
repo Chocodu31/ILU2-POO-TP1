@@ -74,6 +74,11 @@ public class Village {
 		return text.toString();
 	}
 	
+	public String rechercherVendeurProduit(String produit) {
+		for(int i = 0; i < marche.trouverEtals(produit).length; i++) {
+			//
+		}
+	}
 	
 	private class Marche {
 		private Etal[] etals;
