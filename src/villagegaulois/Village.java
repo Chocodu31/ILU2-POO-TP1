@@ -1,5 +1,7 @@
 package villagegaulois;
 
+import java.util.Iterator;
+
 import personnages.Chef;
 import personnages.Gaulois;
 
@@ -56,4 +58,80 @@ public class Village {
 		}
 		return chaine.toString();
 	}
+	
+	
+	private class Marche {
+		private Etal[] etals;
+		
+		private Marche(int nombreEtal) {
+			this.etals = new Etal[nombreEtal];
+			for (int i = 0; i < nombreEtal; i++) {
+				etals[i] = new Etal();
+			}
+		}
+		
+		private void utiliserEtal(int indiceEtal, Gaulois vendeur, String produit, int nbProduit) {
+			if (etals[indiceEtal].isEtalOccupe()) {
+				etals[indiceEtal].occuperEtal(vendeur, produit, nbProduit);
+				System.out.println("L'espace " + indiceEtal + " est désormais occupé par "
+						+ vendeur.getNom() + ".");
+				return;
+			}
+			System.out.println("Erreur cet espace est déjà occupé.");
+			return;
+		}
+		
+		private int trouverEtalLibre() {
+			for (int i = 0; i < etals.length; i++) {
+				if (!etals[i].isEtalOccupe()) {
+					return i;
+				}
+			} // ELLE VEUT QU4ON METTE ISETAL DANS FOR MAIS JSP COMENT FAIT
+			return -1;
+		}
+		
+		private Etal[] trouverEtals(String produit) {
+			Etal[] etalsProduit;
+			int nombreEtal = 0;
+			for (int i = 0; i < etals.length; i++) {
+				if (etals[i].contientProduit(produit)) {
+					nombreEtal++;
+				}
+			}
+			etalsProduit = new Etal[nombreEtal];
+			int added = 0;
+			for (int i = 0; i < etals.length; i++) {
+				if (etals[i].contientProduit(produit)) {
+					etalsProduit[added] = etals[i];
+					added++;
+				}
+			}
+			return etalsProduit;
+		}
+		
+		public Etal trouverVendeur(Gaulois gaulois) {
+			for (int i = 0; i < etals.length; i++) {
+				if (etals[i].getVendeur().equals(gaulois)) {
+					return etals[i];
+				}
+			}
+			return null;
+		}
+		
+		public String afficherMarche() {
+			int nbEtalVide = 0;
+			StringBuilder text = new StringBuilder();
+			for (int i = 0; i<etals.length ; i++) {
+				if (etals[i].isEtalOccupe()) {
+					text.append(etals[i].afficherEtal());
+					text.append("\\n");
+				} else {
+					nbEtalVide++;
+				}
+			}
+			
+			return text + "\\nIl reste" + nbEtalVide + "étals non utilisés dans le marché.";
+		}
+	}
+	
 }
