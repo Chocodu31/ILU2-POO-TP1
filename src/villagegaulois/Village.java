@@ -64,20 +64,37 @@ public class Village {
 	public String installerVendeur(Gaulois vendeur, String produit,int nbProduit) {
 		int indiceEtal = marche.trouverEtalLibre();
 		StringBuilder text = new StringBuilder();
-		text.append(vendeur.getNom() + "cherche un endroit pour vendre " + nbProduit + " " + produit + ".\n");
+		text.append(vendeur.getNom() + " cherche un endroit pour vendre " + nbProduit + " " + produit + ".\n");
 		if (indiceEtal == -1) {
-			text.append("Il n'y a plus de place au marché\n");
+			text.append("Il n'y a plus de place au marchÃ©.\n");
 		} else {
 			marche.utiliserEtal(indiceEtal, vendeur, produit, nbProduit);
-			text.append("Le vendeur " + vendeur.getNom() + " vend des " + produit + " à l'étal n°" + indiceEtal + ".");
+			text.append("Le vendeur " + vendeur.getNom() + " vend des " + produit + " Ã  l'Ã©tal n*" + indiceEtal + ".\n");
 		}
 		return text.toString();
 	}
 	
-	public String rechercherVendeurProduit(String produit) {
-		for(int i = 0; i < marche.trouverEtals(produit).length; i++) {
-			//
+	public String rechercherVendeursProduit(String produit) {
+		StringBuilder text = new StringBuilder();
+		Etal[] etalsProduit = marche.trouverEtals(produit);
+		if (etalsProduit.length == 0) {
+			text.append("Il n'y a aucun vendeur qui vend des " + produit + ".");
+			return text.toString();
+		} else if (etalsProduit.length == 1) {
+			text.append("Seul le vendeur ");
+		} else {
+			text.append("Les vendeur qui proposent des " + produit + " sont : ");
 		}
+		for(int i = 0; i < etalsProduit.length; i++) {
+			if (etalsProduit.length > 1) {
+				text.append("\n- ");
+			}
+			text.append(etalsProduit[i].getVendeur().getNom());
+		}
+		if (etalsProduit.length == 1) {
+			text.append(" propose des " + produit + "au marchÃ©. \n");
+		}
+		return text.toString();
 	}
 	
 	private class Marche {
@@ -91,13 +108,13 @@ public class Village {
 		}
 		
 		public void utiliserEtal(int indiceEtal, Gaulois vendeur, String produit, int nbProduit) {
-			if (etals[indiceEtal].isEtalOccupe()) {
+			if (!etals[indiceEtal].isEtalOccupe()) {
 				etals[indiceEtal].occuperEtal(vendeur, produit, nbProduit);
-				System.out.println("L'espace " + indiceEtal + " est désormais occupé par "
-						+ vendeur.getNom() + ".");
+				System.out.println("L'espace " + indiceEtal + " est dÃ©sormais occupÃ© par "
+						+ vendeur.getNom() + ".\n");
 				return;
 			}
-			System.out.println("Erreur cet espace est déjà occupé.");
+			System.out.println("Erreur cet espace est dÃ©jÃ  occupÃ©. \n");
 			return;
 		}
 		
@@ -150,7 +167,7 @@ public class Village {
 				}
 			}
 			
-			return text + "\nIl reste" + nbEtalVide + "étals non utilisés dans le marché.\n";
+			return text + "\nIl reste" + nbEtalVide + "ï¿½tals non utilisï¿½s dans le marchï¿½.\\n";
 		}
 	}
 	
