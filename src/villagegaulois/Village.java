@@ -97,6 +97,26 @@ public class Village {
 		return text.toString();
 	}
 	
+	public Etal rechercherEtal(Gaulois vendeur) {
+		return marche.trouverVendeur(vendeur);
+	}
+	
+	public String partirVendeur(Gaulois vendeur) {
+		StringBuilder text = new StringBuilder();
+		Etal etal = marche.trouverVendeur(vendeur);
+		if (etal!=null) {
+			text.append(etal.libererEtal());		
+		}
+		return text.toString();
+	}
+	
+	public String afficherMarche() {
+		StringBuilder text = new StringBuilder();
+		text.append("Le marché du village \""+this.nom+"\" possède plusieurs étals :\n");
+		text.append(marche.afficherMarche());
+		return text.toString();
+	}
+	
 	private class Marche {
 		private Etal[] etals;
 		
@@ -167,7 +187,7 @@ public class Village {
 				}
 			}
 			
-			return text + "\nIl reste" + nbEtalVide + "�tals non utilis�s dans le march�.\\n";
+			return text + "\nIl reste " + nbEtalVide + " étals non utilisés dans le marché.\n";
 		}
 	}
 	
