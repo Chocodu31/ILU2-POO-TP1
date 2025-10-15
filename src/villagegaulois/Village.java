@@ -94,7 +94,7 @@ public class Village {
 		if (etalsProduit.length == 1) {
 			text.append(" propose des " + produit + "au marché. \n");
 		}
-		return text.toString();
+		return text.toString(); 
 	}
 	
 	public Etal rechercherEtal(Gaulois vendeur) {

@@ -26,6 +26,9 @@ public class Etal {
 	}
 
 	public String libererEtal() {
+		if (!etalOccupe) {
+	        throw new IllegalStateException("L'étal n'est pas occupé.\n");
+	    }
 		etalOccupe = false;
 		StringBuilder chaine = new StringBuilder(
 				"Le vendeur " + vendeur.getNom() + " quitte son étal, ");
@@ -71,6 +74,7 @@ public class Etal {
 			}
 			return chaine.toString();
 		}
+		
 		return null;
 	}
 
