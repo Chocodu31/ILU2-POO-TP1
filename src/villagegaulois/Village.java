@@ -55,7 +55,7 @@ public class Village {
 			chaine.append("Au village du chef " + chef.getNom()
 					+ " vivent les légendaires gaulois :\n");
 			for (int i = 0; i < nbVillageois; i++) {
-				chaine.append("- " + villageois[i].getNom() + "\n");
+				chaine.append("- ").append(villageois[i].getNom()).append("\n");
 			}
 		}
 		return chaine.toString();

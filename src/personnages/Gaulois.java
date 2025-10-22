@@ -1,4 +1,4 @@
-package personnages;
+	package personnages;
 
 public class Gaulois extends Personnage {
 	private int effetPotion = 1;
