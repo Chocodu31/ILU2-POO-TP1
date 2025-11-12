@@ -63,7 +63,7 @@ public class Etal {
 			throw new IllegalStateException("VENDEUR NULL");
 		}
 		if (quantiteAcheter<1) {
-			throw new IllegalArgumentException("QUANTITE ACHAT<1")
+			throw new IllegalArgumentException("QUANTITE ACHAT<1");
 		}
 		try {
 			if (quantite == 0) {

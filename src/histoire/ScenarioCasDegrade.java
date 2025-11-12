@@ -5,34 +5,36 @@ import personnages.Druide;
 import personnages.Gaulois;
 import villagegaulois.Etal;
 import villagegaulois.Village;
+import villagegaulois.VillageSansChefException;
 
 public class ScenarioCasDegrade {
-	
 	public static void main(String[] args) {
 		Etal etal = new Etal();
-		etal.libererEtal();
-		Etal etalVide = new Etal();
-			
-		Gaulois gaulois = new Gaulois("Pedrux",1);
-		etal.occuperEtal(gaulois, "fleurs", 20);
-			
-		etal.acheterProduit(1, null);
-			
-		System.out.println(etal.afficherEtal());
+		Village village = new Village(null, 0, 0);
+		Gaulois obelix = new Gaulois("Obélix", 25);
+		
 		try {
-			etal.acheterProduit(-10, gaulois);
-		} catch (IllegalArgumentException e) {
-			etal.acheterProduit(10, gaulois);
+			etal.libererEtal();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 		}
-		System.out.println(etal.afficherEtal());
-			
+		
 		try {
-			etalVide.acheterProduit(10, gaulois);
+			etal.acheterProduit(0, null);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
 		} catch (IllegalStateException e) {
-			System.out.println("Etal non occupé");
+			e.printStackTrace();
+		} 
+		
+		try {
+			village.afficherVillageois();
+		}catch (VillageSansChefException e) {
+			e.printStackTrace();
 		}
 		
 		System.out.println("Fin du test");
 	}
-	
 }
