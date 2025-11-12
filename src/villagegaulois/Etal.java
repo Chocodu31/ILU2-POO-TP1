@@ -30,15 +30,15 @@ public class Etal {
 		StringBuilder chaine = new StringBuilder();
 		try {
 			chaine.append("Le vendeur " + vendeur.getNom() + " quitte son étal, ");
+			int produitVendu = quantiteDebutMarche - quantite;
+			if (produitVendu > 0) {
+				chaine.append(
+						"il a vendu " + produitVendu + " parmi " + produit + ".\n");
+			} else {
+				chaine.append("il n'a malheureusement rien vendu.\n");
+			}
 		} catch (NullPointerException e) {
-			return chaine.append("etal vide\n").toString();
-		}
-		int produitVendu = quantiteDebutMarche - quantite;
-		if (produitVendu > 0) {
-			chaine.append(
-					"il a vendu " + produitVendu + " parmi " + produit + ".\n");
-		} else {
-			chaine.append("il n'a malheureusement rien vendu.\n");
+			e.printStackTrace();
 		}
 		return chaine.toString();
 	}
@@ -90,3 +90,4 @@ public class Etal {
 		return produit.equals(this.produit);
 	}
 }
+
