@@ -1,7 +1,5 @@
 package villagegaulois;
 
-import java.util.Iterator;
-
 import personnages.Chef;
 import personnages.Gaulois;
 
@@ -39,7 +37,8 @@ public class Village {
 		}
 		for (int i = 0; i < nbVillageois; i++) {
 			Gaulois gaulois = villageois[i];
-			if (gaulois.getNom().equals(nomGaulois)) {
+			String nom = gaulois.getNom();
+			if (nom != null && nom.equals(nomGaulois)) {
 				return gaulois;
 			}
 		}
@@ -120,6 +119,7 @@ public class Village {
 		return text.toString();
 	}
 	
+	//TODO visibilité, mot clef classe interne
 	private class Marche {
 		private Etal[] etals;
 		
